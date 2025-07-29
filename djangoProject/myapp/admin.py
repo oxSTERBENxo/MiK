@@ -16,6 +16,7 @@ class CountryPolaroidInline(admin.TabularInline):
 class QuestionChoiceInline(admin.TabularInline):
     model = Choice
     extra = 0
+    fields = ['content', 'is_correct']
 
 
 class CountryAdmin(admin.ModelAdmin):
