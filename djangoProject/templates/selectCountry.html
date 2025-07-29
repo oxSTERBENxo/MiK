@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Choose a Country</title>
+</head>
+<body>
+<h2>Внеси име на држава:</h2>
+
+<form method="GET" action="{% url 'redirect_to_country' %}">
+    <input type="text" name="country_name" placeholder="Пр. Brazil" required>
+    <button type="submit">Покажи прашања</button>
+</form>
+
+</body>
+</html>

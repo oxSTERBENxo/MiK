@@ -35,13 +35,13 @@ class CountryAdmin(admin.ModelAdmin):
 
 class QuestionAdmin(admin.ModelAdmin):
     inlines = [QuestionChoiceInline, ]
-    list_display = ("content",)
+    list_display = ("country", "content",)
 
 class ChoiceAdmin(admin.ModelAdmin):
-    list_display = ("content",)
+    list_display = ("question","content",)
 
 class PolaroidAdmin(admin.ModelAdmin):
-    list_display = ("headline",)
+    list_display = ("country","headline",)
 
 
 admin.site.register(Country, CountryAdmin)

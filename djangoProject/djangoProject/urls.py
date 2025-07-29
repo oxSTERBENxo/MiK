@@ -22,4 +22,8 @@ from django.conf import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('select/', views.select, name='select'),
+    path('go/', views.redirect_to_country, name='redirect_to_country'),  # <-- add this
+    path('country_questions/<country_name>/', views.country_questions, name='country_questions'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
