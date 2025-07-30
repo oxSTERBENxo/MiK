@@ -82,18 +82,19 @@
 <form id="quizForm" class="mt-4 quiz-block">
 
     {% for question in questions %}
-        <div class="card my-5 border-3 border-light-subtle shadow-sm rounded-4"
-             style="background-color: rgba(255, 255, 255, 0.85);">
+        <div class="card my-5 shadow-sm rounded-4"
+        style="background-color: rgba(255, 255, 255, 0.85); border: 2px solid {{ country.color }};">
             <div class="card-body">
                 <h5 class="card-title mb-3 fw-bold" style="color: {{ country.color }};">
                     {{ forloop.counter }}. {{ question.content }}
                 </h5>
                 {% for choice in question.choice_set.all %}
                     <div class="form-check">
-                        <input class="form-check-input" type="radio"
+                        <input type="radio"
                                name="q{{ forloop.parentloop.counter }}"
                                value="{{ choice.is_correct|yesno:'1,0' }}"
-                               id="q{{ forloop.parentloop.counter }}-{{ forloop.counter }}">
+                               id="q{{ forloop.parentloop.counter }}-{{ forloop.counter }}"
+                               style="accent-color: {{ country.color }};">
                         <label class="form-check-label" for="q{{ forloop.parentloop.counter }}-{{ forloop.counter }}"
                                style="color: {{ country.color }};">
                             {{ choice.content }}
@@ -109,11 +110,14 @@
     </div>
 </form>
 
-<div id="result-box"
-     class="alert text-center mt-4 d-none"
-     style="background-color: rgba(255, 255, 255, 0.85); border: 2px solid {{ country.color }}; color: {{ country.color }};"
-     role="alert">
+<div class="quiz-block">
+    <div id="result-box"
+         class="alert text-center mt-4 d-none"
+         style="background-color: rgba(255, 255, 255, 0.85); border: 2px solid {{ country.color }}; color: {{ country.color }};"
+         role="alert">
+    </div>
 </div>
+
 
 <div class="container text-center mt-5">
     <a href="https://read.bookcreator.com/" target="_blank" class="btn btn-softwhite">
