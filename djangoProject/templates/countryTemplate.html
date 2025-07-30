@@ -6,36 +6,90 @@
     <title>{{ country.name }} – Мини Квиз</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Comic+Sans+MS&display=swap" rel="stylesheet">
-</head>
-<body style="
-        font-family: 'Comic Sans MS', sans-serif;
-        background-image: url('{{ country.background.url }}');
-        background-repeat: repeat-y;
-        background-size: cover;
-        background-color: #fff;
-        color: {{ country.color }};
-        padding: 20px;
-        ">
+    <style>
+        body {
+            font-family: 'Comic Sans MS', sans-serif;
+            background-image: url('{{ country.background.url }}');
+            background-repeat: repeat-y;
+            background-size: contain;
+            background-position: center top;
+            background-attachment: scroll;
+            background-color: #fff;
+            color: {{ country.color }};
+            padding: 40px 20px;
+            font-size: 1.4rem;
+        }
 
-<div class="container text-center">
-    <h1 class="fw-bold py-3 px-4 rounded-4 shadow d-inline-block"
+        @media (max-width: 768px) {
+            body {
+                background-size: cover;
+            }
+        }
+
+        .quiz-block {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .btn-softwhite {
+            background-color: #f8f8f8;
+            color: {{ country.color }};
+            border: none;
+        }
+
+        .polaroid-box {
+            background-color: rgba(255, 255, 255, 0.85);
+            padding: 10px;
+            border: 2px solid #ccc;
+            border-radius: 12px;
+            width: 140px;
+            text-align: center;
+            box-shadow: 2px 2px 10px rgba(0,0,0,0.1);
+            transform: rotate(-2deg);
+            transition: transform 0.3s ease;
+        }
+
+        .polaroid-box:hover {
+            transform: rotate(0deg) scale(1.05);
+        }
+
+
+        .card-title {
+            font-size: 1.6rem;
+        }
+
+
+        .form-check-label {
+            font-size: 1.3rem;
+        }
+
+
+        .polaroid-box p {
+            font-size: 1rem;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="quiz-block text-center mb-5">
+    <h1 class="fw-bold py-4 px-5 rounded-4 shadow d-inline-block text-center"
         style="background-color: rgba(255, 255, 255, 0.85); color: {{ country.color }};">
         {{ country.headline }}
     </h1>
 </div>
 
-<form id="quizForm" class="mt-4 container">
+<form id="quizForm" class="mt-4 quiz-block">
 
     {% for question in questions %}
-        <div class="card my-4 border-3 border-light-subtle shadow-sm rounded-4"
+        <div class="card my-5 border-3 border-light-subtle shadow-sm rounded-4"
              style="background-color: rgba(255, 255, 255, 0.85);">
             <div class="card-body">
-                <h5 class="card-title mb-3" style="color: {{ country.color }};">
-
+                <h5 class="card-title mb-3 fw-bold" style="color: {{ country.color }};">
                     {{ forloop.counter }}. {{ question.content }}
                 </h5>
                 {% for choice in question.choice_set.all %}
-                    <div class="form-check text-start">
+                    <div class="form-check">
                         <input class="form-check-input" type="radio"
                                name="q{{ forloop.parentloop.counter }}"
                                value="{{ choice.is_correct|yesno:'1,0' }}"
@@ -50,12 +104,9 @@
         </div>
     {% endfor %}
 
-    <div class="text-center">
-        <button type="button" class="btn btn-lg"
-                style="background-color: rgba(255, 255, 255, 0.85); color: {{ country.color }}; border: 2px solid {{ country.color }};"
-                onclick="calculateScore()">Заврши</button>
+    <div class="text-center mt-4">
+        <button type="button" class="btn btn-lg btn-softwhite" onclick="calculateScore()">Заврши</button>
     </div>
-
 </form>
 
 <div id="result-box"
@@ -65,36 +116,20 @@
 </div>
 
 <div class="container text-center mt-5">
-    <a href="https://read.bookcreator.com/" target="_blank"
-       class="btn"
-       style="background-color: rgba(255, 255, 255, 0.85); color: {{ country.color }}; border: 2px solid {{ country.color }};">
+    <a href="https://read.bookcreator.com/" target="_blank" class="btn btn-softwhite">
         ⬅️ Врати се на приказната
     </a>
 </div>
 
 <div class="container mt-5">
     <h3 class="text-center mb-4" style="color: {{ country.color }};">📸 Галерија</h3>
-
     <div class="d-flex flex-wrap justify-content-center gap-3" style="margin-top: 40px;">
         {% for photo in polaroids %}
-            <div style="
-                background-color: rgba(255, 255, 255, 0.85);
-                padding: 10px;
-                border: 2px solid {{ country.color }};
-                border-radius: 12px;
-                width: 140px;
-                text-align: center;
-                box-shadow: 2px 2px 10px rgba(0,0,0,0.1);
-                transform: rotate(-2deg);
-                transition: transform 0.3s ease;"
-                onmouseover="this.style.transform='rotate(0deg) scale(1.05)'"
-                onmouseout="this.style.transform='rotate(-2deg)'">
-                <img src="{{ photo.photo.url }}" alt="{{ photo.headline }}" style="
-                    width: 100%;
-                    aspect-ratio: 1 / 1;
-                    object-fit: cover;
-                    display: block;
-                    border-radius: 6px;">
+            <div class="polaroid-box">
+                <img src="{{ photo.photo.url }}" alt="{{ photo.headline }}"
+                onclick="openPopup('{{ photo.photo.url }}')"
+                style="cursor: zoom-in; width: 100%; aspect-ratio: 1 / 1; object-fit: cover; display: block; border-radius: 6px;">
+
                 <p style="margin-top: 8px; font-size: 14px; color: {{ country.color }};">{{ photo.headline }}</p>
             </div>
         {% endfor %}
@@ -106,7 +141,7 @@
         let total = 0;
         const questionCount = {{ questions.count }};
         for (let i = 1; i <= questionCount; i++) {
-            const selected = document.querySelector(input[name="q${i}"]:checked);
+            const selected = document.querySelector(`input[name="q${i}"]:checked`);
             if (selected) total += parseInt(selected.value);
         }
 
@@ -115,9 +150,58 @@
         resultBox.innerHTML =
             total >= questionCount
                 ? "🎉 <strong>Браво!</strong> Одговори точно на сите прашања – прекрасно познавање на {{ country.name }}!"
-                : "🌸 <strong>Супер!</strong> Научи нешто ново и пробај пак! Резултат: " + total + "/" + questionCount;
+                : "🌸 Научи нешто ново и пробај пак! Резултат: " + total + "/" + questionCount;
     }
+
+    function openPopup(src) {
+        const popup = document.getElementById("popupOverlay");
+        const img = document.getElementById("popupImage");
+        img.src = src;
+        popup.style.display = "flex";
+    }
+
+    function closePopup() {
+        const popup = document.getElementById("popupOverlay");
+        popup.style.display = "none";
+    }
+
+    // Allow ESC key to close popup
+    document.addEventListener('keydown', function (event) {
+        if (event.key === 'Escape') {
+            closePopup();
+        }
+    });
+
+
 </script>
+<!-- Popup Modal -->
+<div id="popupOverlay" style="
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(3px);
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;">
+
+    <span onclick="closePopup()" style="
+        color: white;
+        font-size: 2rem;
+        position: absolute;
+        top: 30px;
+        right: 40px;
+        cursor: pointer;">✖</span>
+
+    <img id="popupImage" src="" alt="Polaroid" style="
+        max-width: 90%;
+        max-height: 80%;
+        border-radius: 12px;
+        box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+        transition: transform 0.3s ease;">
+</div>
 
 </body>
 </html>
