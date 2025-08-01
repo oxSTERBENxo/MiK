@@ -19,11 +19,19 @@ from django.urls import path
 from myapp import views as views
 from django.conf.urls.static import static
 from django.conf import settings
+from django.urls import path, re_path
+from django.views.static import serve
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('select/', views.select, name='select'),
     path('go/', views.redirect_to_country, name='redirect_to_country'),  # <-- add this
     path('country_questions/<country_name>/', views.country_questions, name='country_questions'),
+
+    re_path(r'^favicon\.ico$', serve, {
+        'path': 'favicon.ico',
+        'document_root': settings.STATICFILES_DIRS[0] if settings.DEBUG else settings.STATIC_ROOT,
+    }),
+
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

@@ -42,7 +42,9 @@ class ChoiceAdmin(admin.ModelAdmin):
     list_display = ("question","content",)
 
 class PolaroidAdmin(admin.ModelAdmin):
-    list_display = ("country","headline",)
+    list_display = ("country", "headline", "explanation")
+    fields = ("country", "headline", "photo", "explanation")
+
 
 
 admin.site.register(Country, CountryAdmin)

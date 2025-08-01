@@ -7,6 +7,7 @@ class Country(models.Model):
     headline = models.CharField(max_length=100)
     background = models.ImageField(upload_to="background_photos/", null=True, blank=True)
     color = models.CharField(max_length=100)
+    flag_emoji = models.CharField(max_length=4, null=True, blank=True)
 
     def __str__(self):
         return f"{self.name}"
@@ -15,6 +16,7 @@ class Polaroid(models.Model):
     country = models.ForeignKey(Country, on_delete=models.CASCADE)
     headline = models.CharField(max_length=100)
     photo = models.ImageField(upload_to="polaroid_photos/", null=True, blank=True)
+    explanation = models.TextField(null=True, blank=True)
 
     def __str__(self):
         return f"{self.country.name}"

@@ -13,7 +13,9 @@ def redirect_to_country(request):
 
 
 def select(request):
-    return render(request, 'selectCountry.html', context={})
+    countries = Country.objects.all()
+    return render(request, 'selectCountry.html', {'countries': countries})
+
 
 def country_questions(request, country_name):
     if not country_name:
