@@ -10,24 +10,34 @@
       background-image: url("{% static 'img/select_background.png' %}");
       background-size: cover;
       background-position: center;
-      background-attachment: fixed;
-      padding: 40px 80px;
+      background-attachment: scroll;
+      padding: 40px 0;
       font-family: 'Comic Sans MS', cursive, sans-serif;
+        overflow-x: hidden;
+    }
+
+    .main-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 5vw;
     }
 
     .bubble-container {
       display: flex;
       flex-wrap: wrap;
-      gap: 30px;
       justify-content: center;
-      margin-top: 50px;
+      gap: 40px 60px;
+      max-width: 1000px;
+      margin: 60px auto 0 auto;
+      padding: 0 20px;
     }
+
 
     .country-emoji {
       font-size: 5.5rem;
       text-decoration: none;
       transition: transform 0.3s ease;
-        display: inline-block;
+      display: inline-block;
     }
 
     .text-center:hover .country-emoji {
@@ -38,7 +48,6 @@
       font-weight: bold;
     }
 
-
     .emoji-label {
       font-size: 1.2rem;
       color: #003366;
@@ -46,15 +55,26 @@
       margin-top: 5px;
       text-shadow: 0 0 2px rgba(255,255,255,0.4);
     }
+
+    @media (max-width: 576px) {
+      .main-container {
+        padding: 0 20px;
+      }
+
+      .country-emoji {
+        font-size: 4rem;
+      }
+    }
   </style>
 </head>
 <body>
 
+<div class="main-container">
   <h2 class="text-center fw-bold mb-4"
       style="background-color: rgba(255,255,255,0.85); color: #003366; padding: 15px 30px; border-radius: 20px; max-width: fit-content; margin: 0 auto;">
     🌍 Избери држава за забавен квиз!
   </h2>
-
+<div class="d-flex justify-content-center">
   <div class="bubble-container">
     {% for country in countries %}
       <div class="text-center">
@@ -65,6 +85,8 @@
       </div>
     {% endfor %}
   </div>
+</div>
+</div>
 
 </body>
 </html>
