@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Country, Question, Choice, Polaroid
+from .models import Country, Question, Choice, Polaroid, Song
 
 
 # Register your models here.
@@ -45,9 +45,15 @@ class PolaroidAdmin(admin.ModelAdmin):
     list_display = ("country", "headline", "explanation")
     fields = ("country", "headline", "photo", "explanation")
 
+class SongAdmin(admin.ModelAdmin):
+    list_display = ("country", "file")
+    fields = ("country", "file")
+
+
 
 
 admin.site.register(Country, CountryAdmin)
 admin.site.register(Question, QuestionAdmin)
 admin.site.register(Choice, ChoiceAdmin)
 admin.site.register(Polaroid, PolaroidAdmin)
+admin.site.register(Song, SongAdmin)

@@ -86,11 +86,40 @@
           }
         }
 
+    .music-toggle-btn {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: rgba(255, 255, 255, 0.85);
+      color: {{ country.color }};
+      border: 2px solid {{ country.color }};
+      padding: 10px 18px;
+      border-radius: 30px;
+      font-size: 1rem;
+      font-weight: bold;
+      cursor: pointer;
+      z-index: 999;
+      transition: all 0.3s ease;
+    }
+
+    .music-toggle-btn:hover {
+      background-color: {{ country.color }};
+      color: white;
+    }
+
 
 
     </style>
 </head>
 <body>
+
+<audio id="bg-audio" loop>
+  <source src="{{ song.file.url }}" type="audio/mpeg">
+</audio>
+
+<button id="musicToggleBtn" class="music-toggle-btn" onclick="toggleMusic()">
+  ▶️ Пушти музика
+</button>
 
 <div class="quiz-block text-center mb-5">
     <h1 class="fw-bold py-4 px-5 rounded-4 shadow d-inline-block text-center"
@@ -204,6 +233,27 @@
             closePopup();
         }
     });
+
+    const audio = document.getElementById("bg-audio");
+    const btn = document.getElementById("musicToggleBtn");
+
+    function toggleMusic() {
+      if (audio.paused || audio.ended) {
+        audio.muted = false;
+        audio.play()
+          .then(() => {
+            btn.innerText = "⏸️";
+          })
+          .catch(err => {
+            console.warn("Има проблем :(", err);
+          });
+      } else {
+        audio.pause();
+        btn.innerText = "▶️";
+      }
+    }
+
+
 
 
 </script>

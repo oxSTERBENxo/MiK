@@ -25,16 +25,18 @@ def country_questions(request, country_name):
     questions = country.question_set.all().prefetch_related('choice_set')
     polaroids = country.polaroid_set.all()
 
-    # Shuffle choices for each question
+    song = getattr(country, 'song', None)
+
     for question in questions:
         choices = list(question.choice_set.all())
         random.shuffle(choices)
-        question.shuffled_choices = choices  # attach for template
+        question.shuffled_choices = choices
 
     context = {
         'country': country,
         'questions': questions,
         'polaroids': polaroids,
+        'song': song,
         'app_name': 'myapp',
     }
     return render(request, 'countryTemplate.html', context)

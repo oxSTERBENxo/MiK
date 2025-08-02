@@ -36,3 +36,11 @@ class Choice(models.Model):
 
     def __str__(self):
         return f"{self.question} {self.content}"
+
+
+class Song(models.Model):
+    country = models.OneToOneField(Country, on_delete=models.CASCADE)
+    file = models.FileField(upload_to='music/')
+
+    def __str__(self):
+        return f"{self.country.name} song"
