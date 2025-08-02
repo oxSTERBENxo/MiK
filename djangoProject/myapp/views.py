@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from .models import *
+import random
 
 # Create your views here.
 
@@ -23,6 +24,12 @@ def country_questions(request, country_name):
     country = Country.objects.filter(name=country_name).first()
     questions = country.question_set.all().prefetch_related('choice_set')
     polaroids = country.polaroid_set.all()
+
+    # Shuffle choices for each question
+    for question in questions:
+        choices = list(question.choice_set.all())
+        random.shuffle(choices)
+        question.shuffled_choices = choices  # attach for template
 
     context = {
         'country': country,
