@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from .models import *
 import random
+import locale
+from django.utils.encoding import force_str
 
 # Create your views here.
 
@@ -14,9 +16,10 @@ def redirect_to_country(request):
 
 
 def select(request):
-    countries = Country.objects.all()
+    countries = list(Country.objects.all())
+    locale.setlocale(locale.LC_COLLATE, "mk_MK.UTF-8")  # Macedonian locale
+    countries.sort(key=lambda c: locale.strxfrm(force_str(c.name)))
     return render(request, 'selectCountry.html', {'countries': countries})
-
 
 def country_questions(request, country_name):
     if not country_name:
