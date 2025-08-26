@@ -20,12 +20,14 @@ from django.conf.urls.static import static
 from django.conf import settings
 from django.urls import path, re_path
 from django.views.static import serve
+from django.shortcuts import redirect   
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('select/', views.select, name='select'),
     path('go/', views.redirect_to_country, name='redirect_to_country'),  # <-- add this
     path('country_questions/<country_name>/', views.country_questions, name='country_questions'),
+    path('', lambda r: redirect('select')),
 
     re_path(r'^favicon\.ico$', serve, {
         'path': 'favicon.ico',
