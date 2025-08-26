@@ -101,7 +101,7 @@ STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 # ---- Media (use disk on Render with MEDIA_ROOT=/var/media) ----
 MEDIA_URL  = "/media/"
-MEDIA_ROOT = (BASE_DIR.parent / "media").resolve()
+MEDIA_ROOT = BASE_DIR / "media"
 
 
 # ---- Security behind proxy (https) ----
