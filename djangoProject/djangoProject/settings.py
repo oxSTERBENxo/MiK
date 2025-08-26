@@ -29,6 +29,7 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',  # <-- add this
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -75,7 +76,7 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 # ---- I18N / TZ ----
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = "mk"
 TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_TZ = True
@@ -94,6 +95,7 @@ MEDIA_ROOT = Path(os.getenv("MEDIA_ROOT", BASE_DIR / "media"))
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 SESSION_COOKIE_SECURE = not (os.getenv("DEBUG", "1") == "1")
 CSRF_COOKIE_SECURE = not (os.getenv("DEBUG", "1") == "1")
+CSRF_TRUSTED_ORIGINS = os.getenv("CSRF_TRUSTED_ORIGINS", "").split()
 
 # ---- Default PK type ----
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
