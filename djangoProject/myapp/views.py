@@ -17,9 +17,19 @@ def redirect_to_country(request):
 
 def select(request):
     countries = list(Country.objects.all())
-    locale.setlocale(locale.LC_COLLATE, "mk_MK.UTF-8")  # Macedonian locale
+    try:
+        # Try Macedonian locale (works locally)
+        locale.setlocale(locale.LC_COLLATE, "mk_MK.UTF-8")
+    except locale.Error:
+        # Fallbacks for Render (it doesn’t have mk_MK)
+        try:
+            locale.setlocale(locale.LC_COLLATE, "C.UTF-8")
+        except locale.Error:
+            locale.setlocale(locale.LC_COLLATE, "C")  # last resort
+
     countries.sort(key=lambda c: locale.strxfrm(force_str(c.name)))
     return render(request, 'selectCountry.html', {'countries': countries})
+
 
 def country_questions(request, country_name):
     if not country_name:
