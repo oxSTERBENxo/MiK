@@ -7,7 +7,7 @@ class Country(models.Model):
     headline = models.CharField(max_length=100)
     background = models.ImageField(upload_to="background_photos/", null=True, blank=True)
     color = models.CharField(max_length=100)
-    flag_emoji = models.CharField(max_length=4, null=True, blank=True)
+    flag_emoji = models.CharField(max_length=8, null=True, blank=True)
 
     def __str__(self):
         return f"{self.name}"
