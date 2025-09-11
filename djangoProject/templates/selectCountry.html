@@ -88,5 +88,27 @@
 </div>
 </div>
 
+<script>
+  (function () {
+    const collator = new Intl.Collator('mk', {
+      usage: 'sort',
+      sensitivity: 'base',
+      ignorePunctuation: true,
+      numeric: true
+    });
+
+    const container = document.querySelector('.bubble-container');
+    const cards = Array.from(container.children);
+
+    cards.sort((a, b) => {
+      const an = a.querySelector('.emoji-label').textContent.trim();
+      const bn = b.querySelector('.emoji-label').textContent.trim();
+      return collator.compare(an, bn);
+    });
+
+    cards.forEach(el => container.appendChild(el)); // re-append in sorted order
+  })();
+</script>
+
 </body>
 </html>
