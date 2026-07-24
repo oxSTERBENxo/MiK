@@ -51,7 +51,7 @@ djangoProject/
 └── website_pictures/         # screenshots used in this README
 ```
 
-> **Note on dependencies:** `requirements.legacy.txt` at the repository root is an old, unrelated dependency snapshot left over from a different environment and is **not used by this project**. The only requirements file needed to run GeoLearn is `djangoProject/requirements.txt`.
+
 
 ## Getting Started
 
