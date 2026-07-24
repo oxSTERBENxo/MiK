@@ -42,7 +42,7 @@ Quiz data (countries, questions, choices, photos, songs) lives in the database a
 djangoProject/
 ├── manage.py
 ├── Procfile                  # gunicorn start command (Render)
-├── requirements.txt          # canonical dependency list — use this one
+├── requirements.txt          # dependency list 
 ├── djangoProject/            # Django project settings, URLs, WSGI/ASGI
 ├── myapp/                    # Models, views, admin for countries/quizzes
 ├── templates/                # selectCountry.html, countryTemplate.html
